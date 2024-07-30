@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+  <link rel="stylesheet" href="styles.css">
+  <title>Frontend Mentor | Contact form</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+      .alert {
+          display: none; /* Hide the alert by default */
+          padding: 20px;
+          background-color: #f44336;
+          color: white;
+          margin-bottom: 15px;
+      }
+
+      .closebtn {
+          margin-left: 15px;
+          color: white;
+          font-weight: bold;
+          float: right;
+          font-size: 22px;
+          line-height: 20px;
+          cursor: pointer;
+          transition: 0.3s;
+      }
+
+      .closebtn:hover {
+          color: black;
+      }
+
+      .error {
+          color: red;
+          display: none;
+      }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>Contact Us</h2>
+  <form id="contactForm">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <div style="display: flex; flex-direction: column; margin-right: 20px;">
+          <label for="FirstName">First Name *</label>
+          <input type="text" id="FirstName" name="FirstName" required>
+          <span class="error" id="FirstNameError">First Name is required</span>
+      </div>
+      <div style="display: flex; flex-direction: column;">
+          <label for="LastName">Last Name *</label>
+          <input type="text" id="LastName" name="LastName" required>
+          <span class="error" id="LastNameError">Last Name is required</span>
+      </div>
+  </div>
+  <br>  
+    
+    <label for="email">Email *</label><br>
+    <input type="email" id="email" name="email" required><br>
+    <span class="error" id="emailError">Please enter a valid email address</span><br>
+
+    <label for="querytype">Query Type *</label><br>
+    <div style="display: flex; align-items: center;">
+      <input type="radio" id="general-enquiry" name="query-type" value="General Enquiry" checked>
+      <label for="general-enquiry">General Enquiry</label>
+      <input type="radio" id="support-request" name="query-type" value="Support Request">
+      <label for="support-request">Support Request</label><br>
+    </div>
+    <label for="message">Message *</label><br>
+    <textarea id="message" name="message" rows="5" required></textarea><br>
+    <span class="error" id="messageError">Message is required</span><br>
+
+    <input type="checkbox" id="consent" name="consent" required>
+    <label for="consent">I consent to being contacted by the team *</label><br>
+    <span class="error" id="consentError">You must consent to being contacted</span>
+
+    <button type="button" onclick="validateForm()">Submit</button>
+  </form>
+
+  <div class="alert" id="myAlert">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    <strong>Message Sent!</strong> <br>Thanks for completing the form. We'll be in touch soon!
+  </div>
+</div>
+<div class="attribution">
+  Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>.
+  Coded by <a href="">Dhaya</a>.
+</div>
+
+<script>
+    function validateForm() {
+        // Get form elements
+        const firstName = document.getElementById('FirstName');
+        const lastName = document.getElementById('LastName');
+        const email = document.getElementById('email');
+        const message = document.getElementById('message');
+        const consent = document.getElementById('consent');
+
+        // Get error elements
+        const firstNameError = document.getElementById('FirstNameError');
+        const lastNameError = document.getElementById('LastNameError');
+        const emailError = document.getElementById('emailError');
+        const messageError = document.getElementById('messageError');
+        const consentError = document.getElementById('consentError');
+
+        // Clear previous errors
+        firstNameError.style.display = 'none';
+        lastNameError.style.display = 'none';
+        emailError.style.display = 'none';
+        messageError.style.display = 'none';
+        consentError.style.display = 'none';
+
+        // Validation
+        let valid = true;
+
+        if (firstName.value === '') {
+            firstNameError.style.display = 'block';
+            valid = false;
+        }
+
+        if (lastName.value === '') {
+            lastNameError.style.display = 'block';
+            valid = false;
+        }
+
+        if (email.value === '') {
+            emailError.style.display = 'block';
+            valid = false;
+        } else {
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email.value)) {
+                emailError.style.display = 'block';
+                emailError.textContent = 'Invalid email format';
+                valid = false;
+            }
+        }
+
+        if (message.value === '') {
+            messageError.style.display = 'block';
+            valid = false;
+        }
+
+        if (!consent.checked) {
+            consentError.style.display = 'block';
+            valid = false;
+        }
+
+        if (valid) {
+            document.getElementById("myAlert").style.display = "block";
+        }
+    }
+</script>
+</body>
+</html>
